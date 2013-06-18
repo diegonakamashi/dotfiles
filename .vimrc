@@ -16,9 +16,11 @@ if &term =~ '^screen'
     execute "set <xLeft>=\e[1;*D"
 endif
 
-" Tabs
-nnoremap <c-Left> :tabprevious<CR>
-nnoremap <c-Right> :tabnext<CR>
+" Vim Tabs
+nnoremap <c-t>      :tabnew .<CR>
+nnoremap <c-x>      :tabclose<CR>
+nnoremap <c-Left>   :tabprevious<CR>
+nnoremap <c-Right>  :tabnext<CR>
 
 " CoffeeScript
 Bundle 'kchmck/vim-coffee-script'
@@ -72,4 +74,5 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 " Vimwiki
 Bundle 'vim-scripts/vimwiki'
 
-
+" Coloschemes
+Bundle 'flazz/vim-colorschemes'
