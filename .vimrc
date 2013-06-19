@@ -27,6 +27,7 @@ Bundle 'kchmck/vim-coffee-script'
 
 filetype plugin on
 syntax on
+colorscheme desert
 set ignorecase  	                  " Do case in sensitive matching with
 set smartcase		                    " be sensitive when there's a capital letter
 
@@ -40,6 +41,8 @@ set expandtab                       " Make tabs into spaces (set by tabstop)
 set smarttab                        " Smarter tab levels
 set autoindent
 set backspace=2                     " make backspace work like most other app 
+set number
+set cursorline
 
 " CtrlP
 Bundle 'kien/ctrlp.vim'
@@ -75,6 +78,7 @@ let g:ctrlp_cmd = 'CtrlP'
 
 " ###########################YouCompleteMe##################
  Bundle 'Valloric/YouCompleteMe' 
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
 " ###########################END YouCompleteMe#############
 
 
@@ -83,3 +87,9 @@ Bundle 'vim-scripts/vimwiki'
 
 " Coloschemes
 Bundle 'flazz/vim-colorschemes'
+
+" Tern
+Bundle 'marijnh/tern_for_vim' 
+
+" Vim Multiple Cusors
+Bundle 'terryma/vim-multiple-cursors'
