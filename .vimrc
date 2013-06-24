@@ -44,6 +44,15 @@ set backspace=2                     " make backspace work like most other app
 set number
 set cursorline
 
+" Bubble Text
+" Bubble single lines
+nmap <C-Up> ddkP
+nmap <C-Down> ddp
+" Bubble multiple lines
+vmap <C-Up> xkP`[V`]
+vmap <C-Down> xp`[V`]
+
+
 " CtrlP
 Bundle 'kien/ctrlp.vim'
 let g:ctrlp_map = '<c-p>'
@@ -93,3 +102,6 @@ Bundle 'marijnh/tern_for_vim'
 
 " Vim Multiple Cusors
 Bundle 'terryma/vim-multiple-cursors'
+
+" Indent Guides
+Bundle 'Yggdroot/indentLine'
