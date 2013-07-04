@@ -1,3 +1,4 @@
+set t_Co=256
 " Vundle
 set nocompatible
 filetype off
@@ -25,9 +26,12 @@ nnoremap <c-Right>  :tabnext<CR>
 " CoffeeScript
 Bundle 'kchmck/vim-coffee-script'
 
+" set term=xterm-256color
 filetype plugin on
-syntax on
-colorscheme desert
+syntax enable
+let g:solarized_termcolors=256
+set background=dark
+colorscheme solarized
 set ignorecase  	                  " Do case in sensitive matching with
 set smartcase		                    " be sensitive when there's a capital letter
 
@@ -52,6 +56,10 @@ nmap <C-Down> ddp
 vmap <C-Up> xkP`[V`]
 vmap <C-Down> xp`[V`]
 
+" Snips
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'tomtom/tlib_vim'
+Bundle 'garbas/vim-snipmate'
 
 " CtrlP
 Bundle 'kien/ctrlp.vim'
@@ -86,16 +94,13 @@ let g:ctrlp_cmd = 'CtrlP'
 " ###########END NEOCOMPLCACHE######################"
 
 " ###########################YouCompleteMe##################
- Bundle 'Valloric/YouCompleteMe' 
-let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
+Bundle 'Valloric/YouCompleteMe' 
+let g:ycm_key_list_select_completion = ['<Down>', '<Enter>']
 " ###########################END YouCompleteMe#############
 
 
 " Vimwiki
 Bundle 'vim-scripts/vimwiki'
-
-" Coloschemes
-Bundle 'flazz/vim-colorschemes'
 
 " Tern
 Bundle 'marijnh/tern_for_vim' 
@@ -105,3 +110,11 @@ Bundle 'terryma/vim-multiple-cursors'
 
 " Indent Guides
 Bundle 'Yggdroot/indentLine'
+
+" NerdTree
+Bundle 'scrooloose/nerdtree'
+
+" powerline
+Bundle 'Lokaltog/vim-powerline'
+set laststatus=2   " Always show the statusline
+set encoding=utf-8 " Necessary to show Unicode glyphs
