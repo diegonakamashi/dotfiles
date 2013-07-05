@@ -47,6 +47,7 @@ set autoindent
 set backspace=2                     " make backspace work like most other app 
 set number
 set cursorline
+set synmaxcol=300
 
 " Bubble Text
 " Bubble single lines
@@ -68,9 +69,10 @@ let g:ctrlp_cmd = 'CtrlP'
 
 " ##########NEOCOMPLCACHE#############
 " neocomplcache
-" Bundle 'Shougo/neocomplcache'
-" let g:acp_enableAtStartup = 0                           " Disable AutoComplPop
-" let g:neocomplcache_enable_at_startup = 1               " Use neocomplcache
+" Bundle 'Shougo/neocomplete.vim'
+Bundle 'Shougo/neocomplcache'
+let g:acp_enableAtStartup = 0                           " Disable AutoComplPop
+let g:neocomplcache_enable_at_startup = 1               " Use neocomplcache
 " let g:neocomplcache_enable_smart_case = 1               " Use smartcase
 " let g:neocomplcache_enable_camel_case_completion = 1    " Use camel case completion
 " let g:neocomplcache_enable_underbar_completion = 1      " Use underbar completion
@@ -94,9 +96,10 @@ let g:ctrlp_cmd = 'CtrlP'
 " ###########END NEOCOMPLCACHE######################"
 
 " ###########################YouCompleteMe##################
-Bundle 'Valloric/YouCompleteMe' 
-let g:ycm_key_list_select_completion = ['<Down>', '<Enter>']
+" Bundle 'Valloric/YouCompleteMe' 
+" let g:ycm_key_list_select_completion = ['<Down>', '<Enter>']
 " ###########################END YouCompleteMe#############
+
 
 
 " Vimwiki
