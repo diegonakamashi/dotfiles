@@ -5,8 +5,12 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 " let Vundle manage Vundle
-" required! 
+" required!
 Bundle 'gmarik/vundle'
+
+" Trailing Spaces
+match ErrorMsg '\s\+$'
+nnoremap <Leader>rtw :%s/\s\+$//e<CR>
 
 " Vim shortcuts + Tmux
 if &term =~ '^screen'
@@ -17,20 +21,29 @@ if &term =~ '^screen'
     execute "set <xLeft>=\e[1;*D"
 endif
 
+
+nnoremap <silent> <F8> :TlistToggle<CR>
+
 " Vim Tabs
 nnoremap <c-t>      :tabnew .<CR>
 nnoremap <c-x>      :tabclose<CR>
 nnoremap <c-Left>   :tabprevious<CR>
 nnoremap <c-Right>  :tabnext<CR>
 
+" colorscheme solarized
+Bundle 'altercation/vim-colors-solarized'
+
 " CoffeeScript
 Bundle 'kchmck/vim-coffee-script'
+
+set ttimeoutlen=0 
 
 " set term=xterm-256color
 filetype plugin on
 syntax enable
 let g:solarized_termcolors=256
 set background=dark
+set noswapfile                      " No swap file
 colorscheme solarized
 set ignorecase  	                  " Do case in sensitive matching with
 set smartcase		                    " be sensitive when there's a capital letter
@@ -38,15 +51,15 @@ set smartcase		                    " be sensitive when there's a capital letter
 set nowrap
 set textwidth=0	                    " Don't wrap lines by default
 
-set tabstop=2                       " tell vim how many columns a tab counts for 
+set tabstop=2                       " tell vim how many columns a tab counts for
 set softtabstop=2                   " control how many columns vim uses when you hit Tab in insert mode.
 set shiftwidth=2                    " control how many columns text is indented with the reindent operations (<< and >>) and automatic C-style indentation
 set expandtab                       " Make tabs into spaces (set by tabstop)
 set smarttab                        " Smarter tab levels
 set autoindent
-set backspace=2                     " make backspace work like most other app 
+set backspace=2                     " make backspace work like most other app
 set number
-set cursorline
+"set cursorline
 set synmaxcol=300
 
 " Bubble Text
@@ -69,14 +82,14 @@ let g:ctrlp_cmd = 'CtrlP'
 
 " ##########NEOCOMPLCACHE#############
 " neocomplcache
-" Bundle 'Shougo/neocomplete.vim'
-Bundle 'Shougo/neocomplcache'
-let g:acp_enableAtStartup = 0                           " Disable AutoComplPop
-let g:neocomplcache_enable_at_startup = 1               " Use neocomplcache
-" let g:neocomplcache_enable_smart_case = 1               " Use smartcase
-" let g:neocomplcache_enable_camel_case_completion = 1    " Use camel case completion
-" let g:neocomplcache_enable_underbar_completion = 1      " Use underbar completion
-" let g:neocomplcache_min_syntax_length = 3               " Set minimum syntax keyword length
+"  Bundle 'Shougo/neocomplete.vim'
+ Bundle 'Shougo/neocomplcache'
+ let g:acp_enableAtStartup = 0                           " Disable AutoComplPop
+ let g:neocomplcache_enable_at_startup = 1               " Use neocomplcache
+ let g:neocomplcache_enable_smart_case = 1               " Use smartcase
+ let g:neocomplcache_enable_camel_case_completion = 1    " Use camel case completion
+ let g:neocomplcache_enable_underbar_completion = 1      " Use underbar completion
+ let g:neocomplcache_min_syntax_length = 3               " Set minimum syntax keyword length
 
 " Enable omni completion.
 " autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -96,28 +109,42 @@ let g:neocomplcache_enable_at_startup = 1               " Use neocomplcache
 " ###########END NEOCOMPLCACHE######################"
 
 " ###########################YouCompleteMe##################
-" Bundle 'Valloric/YouCompleteMe' 
+"  Bundle 'Valloric/YouCompleteMe'
 " let g:ycm_key_list_select_completion = ['<Down>', '<Enter>']
 " ###########################END YouCompleteMe#############
 
 
 
 " Vimwiki
-Bundle 'vim-scripts/vimwiki'
+ Bundle 'vim-scripts/vimwiki'
 
 " Tern
-Bundle 'marijnh/tern_for_vim' 
+" Bundle 'marijnh/tern_for_vim'
 
 " Vim Multiple Cusors
 Bundle 'terryma/vim-multiple-cursors'
 
 " Indent Guides
-Bundle 'Yggdroot/indentLine'
+" Bundle 'Yggdroot/indentLine'
 
 " NerdTree
 Bundle 'scrooloose/nerdtree'
+map <F2> :NERDTreeToggle<CR> " Mapping to F2
 
 " powerline
 Bundle 'Lokaltog/vim-powerline'
 set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show Unicode glyphs
+let g:Powerline_symbols = 'fancy'
+
+" Colorschemes
+Bundle "flazz/vim-colorschemes"
+let g:molokai_original = 1
+
+" Git
+Bundle "tpope/vim-fugitive"
+
+" vim-javascript
+Bundle "pangloss/vim-javascript"
+
+Bundle  "othree/javascript-libraries-syntax.vim"
