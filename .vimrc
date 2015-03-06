@@ -1,56 +1,18 @@
 set t_Co=256
-" Vundle
 set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-" let Vundle manage Vundle
-" required!
-Bundle 'gmarik/vundle'
 
-" Trailing Spaces
-match ErrorMsg '\s\+$'
-nnoremap <Leader>rtw :%s/\s\+$//e<CR>
+" Remove trailing whitespaces on save
+autocmd BufWritePre * :%s/\s\+$//e
 
-" Vim shortcuts + Tmux
-if &term =~ '^screen'
-    " tmux will send xterm-style keys when its xterm-keys option is on
-    execute "set <xUp>=\e[1;*A"
-    execute "set <xDown>=\e[1;*B"
-    execute "set <xRight>=\e[1;*C"
-    execute "set <xLeft>=\e[1;*D"
-endif
-
-
-nnoremap <silent> <F8> :TlistToggle<CR>
-
-" Vim Tabs
-nnoremap <c-t>      :tabnew .<CR>
-nnoremap <c-x>      :tabclose<CR>
-nnoremap <c-Left>   :tabprevious<CR>
-nnoremap <c-Right>  :tabnext<CR>
-
-" colorscheme solarized
-Bundle 'altercation/vim-colors-solarized'
-
-" CoffeeScript
-Bundle 'kchmck/vim-coffee-script'
-
-set ttimeoutlen=0 
-
-" set term=xterm-256color
+set ttimeoutlen=0
 filetype plugin on
+set clipboard+=unnamedplus          " Share System Clipboard
 syntax enable
-let g:solarized_termcolors=256
-set background=dark
 set noswapfile                      " No swap file
-colorscheme solarized
 set ignorecase  	                  " Do case in sensitive matching with
 set smartcase		                    " be sensitive when there's a capital letter
-
 set nowrap
 set textwidth=0	                    " Don't wrap lines by default
-
 set tabstop=2                       " tell vim how many columns a tab counts for
 set softtabstop=2                   " control how many columns vim uses when you hit Tab in insert mode.
 set shiftwidth=2                    " control how many columns text is indented with the reindent operations (<< and >>) and automatic C-style indentation
@@ -70,81 +32,124 @@ nmap <C-Down> ddp
 vmap <C-Up> xkP`[V`]
 vmap <C-Down> xp`[V`]
 
+" Vim shortcuts + Tmux
+if &term =~ '^screen'
+    " tmux will send xterm-style keys when its xterm-keys option is on
+    execute "set <xUp>=\e[1;*A"
+    execute "set <xDown>=\e[1;*B"
+    execute "set <xRight>=\e[1;*C"
+    execute "set <xLeft>=\e[1;*D"
+endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'rking/ag.vim'
+
+" colorscheme solarized
+Plug 'altercation/vim-colors-solarized'
+
+" CoffeeScript
+Plug 'kchmck/vim-coffee-script'
+
 " Snips
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
-Bundle 'garbas/vim-snipmate'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " CtrlP
-Bundle 'kien/ctrlp.vim'
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-
-" ##########NEOCOMPLCACHE#############
-" neocomplcache
-"  Bundle 'Shougo/neocomplete.vim'
- Bundle 'Shougo/neocomplcache'
- let g:acp_enableAtStartup = 0                           " Disable AutoComplPop
- let g:neocomplcache_enable_at_startup = 1               " Use neocomplcache
- let g:neocomplcache_enable_smart_case = 1               " Use smartcase
- let g:neocomplcache_enable_camel_case_completion = 1    " Use camel case completion
- let g:neocomplcache_enable_underbar_completion = 1      " Use underbar completion
- let g:neocomplcache_min_syntax_length = 3               " Set minimum syntax keyword length
-
-" Enable omni completion.
-" autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-" autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-" autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-" Enable heavy omni completion.
-" if !exists('g:neocomplcache_omni_patterns')
-"   let g:neocomplcache_omni_patterns = {}
-" endif
-" let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-" autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-" let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-" let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
-" let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
-" ###########END NEOCOMPLCACHE######################"
-
-" ###########################YouCompleteMe##################
-"  Bundle 'Valloric/YouCompleteMe'
-" let g:ycm_key_list_select_completion = ['<Down>', '<Enter>']
-" ###########################END YouCompleteMe#############
-
-
-
-" Vimwiki
- Bundle 'vim-scripts/vimwiki'
-
-" Tern
-" Bundle 'marijnh/tern_for_vim'
+Plug 'kien/ctrlp.vim'
 
 " Vim Multiple Cusors
-Bundle 'terryma/vim-multiple-cursors'
-
-" Indent Guides
-" Bundle 'Yggdroot/indentLine'
+Plug 'terryma/vim-multiple-cursors'
 
 " NerdTree
-Bundle 'scrooloose/nerdtree'
-map <F2> :NERDTreeToggle<CR> " Mapping to F2
+Plug 'scrooloose/nerdtree'
 
 " powerline
-Bundle 'Lokaltog/vim-powerline'
+Plug 'Lokaltog/vim-powerline'
+
+Plug 'tomasr/molokai'
+
+" Git
+Plug 'tpope/vim-fugitive'
+
+" vim-javascript
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+Plug  'othree/javascript-libraries-syntax.vim', {'for': 'javascript'}
+Plug 'marijnh/tern_for_vim', {'for': 'javascript'}
+
+Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
+Plug 'vim-scripts/CSApprox'
+Plug 'ervandew/supertab'
+
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'Raimondi/delimitMate'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown', {'for': 'md'}
+Plug 'benekastah/neomake'
+Plug 'mattn/emmet-vim', {'for': 'html'}
+Plug 'tpope/vim-surround'
+Plug 'slim-template/vim-slim', {'for': 'slim'}
+Plug 'ervandew/supertab '
+call plug#end()
+
+" CSApprox, for emulating gvim colors on teh terminal
+if !has('gui_running') && exists(':CSApprox')
+  CSApprox
+endif
+
+if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
+   set t_Co=256
+endif
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+let g:ctrlp_custom_ignore = {
+\ 'dir': '\.git$\|vendor\/bundle\|\.yardoc\|node_modules\|log\|tmp$',
+\ 'file': '\.so$\|\.dat$|\.DS_Store$'
+\ }
+
+let g:rehash256 = 1
+
+map <F2> :NERDTreeToggle<CR> " Mapping to F2
 set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show Unicode glyphs
 let g:Powerline_symbols = 'fancy'
 
-" Colorschemes
-Bundle "flazz/vim-colorschemes"
-let g:molokai_original = 1
+"NeoMake
+let g:neomake_javascript_eslint_maker = {
+        \ 'args': ['-f', 'compact', '-c', '/home/diegonakamashi/.eslint.json'],
+        \ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
+        \ '%W%f: line %l\, col %c\, Warning - %m'
+    \ }
 
-" Git
-Bundle "tpope/vim-fugitive"
+let g:neomake_javascript_enabled_makers = ['eslint']
+autocmd! BufWritePost * Neomake
 
-" vim-javascript
-Bundle "pangloss/vim-javascript"
+" UltiSnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-Bundle  "othree/javascript-libraries-syntax.vim"
+let g:solarized_termcolors=256
+" set background=dark
+" colorscheme solarized
+
+" SuperTab
+let g:SuperTabDefaultCompletionType = 'context'
+augroup SuperTab
+ autocmd!
+ autocmd FileType *
+   \ if &omnifunc != '' |
+   \   call SuperTabChain(&omnifunc, "<c-p>") |
+   \ endif
+augroup end
+colorscheme molokai
