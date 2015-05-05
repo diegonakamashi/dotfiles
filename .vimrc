@@ -54,17 +54,11 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
-" CtrlP
-Plug 'kien/ctrlp.vim'
-
 " Vim Multiple Cusors
 Plug 'terryma/vim-multiple-cursors'
 
-" NerdTree
-Plug 'scrooloose/nerdtree'
-
 " powerline
-Plug 'Lokaltog/vim-powerline'
+Plug 'itchyny/lightline.vim'
 
 Plug 'tomasr/molokai'
 
@@ -83,12 +77,14 @@ Plug 'ervandew/supertab'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown', {'for': 'md'}
 Plug 'benekastah/neomake'
 Plug 'mattn/emmet-vim', {'for': 'html'}
 Plug 'tpope/vim-surround'
 Plug 'slim-template/vim-slim', {'for': 'slim'}
-Plug 'ervandew/supertab '
+Plug 'scrooloose/nerdtree'
+
+Plug 'w0ng/vim-hybrid'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 call plug#end()
 
 " CSApprox, for emulating gvim colors on teh terminal
@@ -100,26 +96,11 @@ if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
    set t_Co=256
 endif
 
-" The Silver Searcher
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
-
-let g:ctrlp_custom_ignore = {
-\ 'dir': '\.git$\|vendor\/bundle\|\.yardoc\|node_modules\|log\|tmp$',
-\ 'file': '\.so$\|\.dat$|\.DS_Store$'
-\ }
+" Uses <C-p> as fzf trigger
+nnoremap <silent> <C-p> :FZF<CR>
 
 let g:rehash256 = 1
 
-map <F2> :NERDTreeToggle<CR> " Mapping to F2
 set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show Unicode glyphs
 let g:Powerline_symbols = 'fancy'
@@ -152,4 +133,28 @@ augroup SuperTab
    \   call SuperTabChain(&omnifunc, "<c-p>") |
    \ endif
 augroup end
-colorscheme molokai
+
+" lightline
+let g:lightline = {
+ \ 'active': {
+ \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+ \ },
+ \ 'component': {
+ \   'readonly': '%{&readonly?"":""}',
+ \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+ \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+ \ },
+ \ 'component_visible_condition': {
+ \   'readonly': '(&filetype!="help"&& &readonly)',
+ \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+ \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+ \ },
+\ 'separator': { 'left': '⮀', 'right': '⮂' },
+\ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+ \ }
+
+
+" Open edit mode like NERDTree
+let g:netrw_liststyle=3
+nnoremap <F2> :NERDTreeToggle<CR>
+colorscheme hybrid
