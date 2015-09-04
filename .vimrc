@@ -85,6 +85,8 @@ Plug 'scrooloose/nerdtree'
 
 Plug 'w0ng/vim-hybrid'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+
+Plug 'morhetz/gruvbox'
 call plug#end()
 
 " CSApprox, for emulating gvim colors on teh terminal
@@ -157,4 +159,5 @@ let g:lightline = {
 " Open edit mode like NERDTree
 let g:netrw_liststyle=3
 nnoremap <F2> :NERDTreeToggle<CR>
-colorscheme hybrid
+set background=dark
+colorscheme gruvbox
