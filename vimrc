@@ -41,6 +41,14 @@ if &term =~ '^screen'
     execute "set <xLeft>=\e[1;*D"
 endif
 
+" Mapping xclip clipboard support
+if system("echo $DISPLAY") =~ ""
+  vmap <C-c> y: call system("> /tmp/theClipboardWithoutX", getreg("\""))<CR>
+  map <C-v> :call setreg("\"", system("< /tmp/theClipboardWithoutX"))<CR>p
+else
+  vmap <C-c> y: call system("xclip -i -selection clipboard", getreg("\""))<CR>
+  map <C-v> :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
+endif
 call plug#begin('~/.vim/plugged')
 Plug 'rking/ag.vim'
 
@@ -73,6 +81,9 @@ Plug 'marijnh/tern_for_vim', {'for': 'javascript'}
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
 Plug 'vim-scripts/CSApprox'
 Plug 'ervandew/supertab'
+
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+
 
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'Raimondi/delimitMate'
@@ -117,6 +128,11 @@ let g:neomake_javascript_eslint_maker = {
 let g:neomake_javascript_enabled_makers = ['eslint']
 autocmd! BufWritePost * Neomake
 
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -125,16 +141,6 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:solarized_termcolors=256
 " set background=dark
 " colorscheme solarized
-
-" SuperTab
-let g:SuperTabDefaultCompletionType = 'context'
-augroup SuperTab
- autocmd!
- autocmd FileType *
-   \ if &omnifunc != '' |
-   \   call SuperTabChain(&omnifunc, "<c-p>") |
-   \ endif
-augroup end
 
 " lightline
 let g:lightline = {
@@ -161,3 +167,5 @@ let g:netrw_liststyle=3
 nnoremap <F2> :NERDTreeToggle<CR>
 set background=dark
 colorscheme gruvbox
+
+
