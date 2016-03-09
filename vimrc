@@ -1,4 +1,5 @@
 set t_Co=256
+set encoding=utf-8
 set nocompatible
 
 " Remove trailing whitespaces on save
@@ -66,7 +67,7 @@ Plug 'honza/vim-snippets'
 Plug 'terryma/vim-multiple-cursors'
 
 " powerline
-Plug 'itchyny/lightline.vim'
+Plug 'vim-airline/vim-airline'
 
 Plug 'tomasr/molokai'
 
@@ -75,8 +76,8 @@ Plug 'tpope/vim-fugitive'
 
 " vim-javascript
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-Plug  'othree/javascript-libraries-syntax.vim', {'for': 'javascript'}
-Plug 'marijnh/tern_for_vim', {'for': 'javascript'}
+Plug 'othree/javascript-libraries-syntax.vim', {'for': 'javascript'}
+Plug 'jelera/vim-javascript-syntax', {'for': 'javascript'}
 
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
 Plug 'vim-scripts/CSApprox'
@@ -89,7 +90,8 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'
 Plug 'benekastah/neomake'
-Plug 'mattn/emmet-vim', {'for': 'html'}
+Plug 'mattn/emmet-vim', {'for': ['html', 'javascript']}
+Plug 'mxw/vim-jsx', {'for': 'javascript'}
 Plug 'tpope/vim-surround'
 Plug 'slim-template/vim-slim', {'for': 'slim'}
 Plug 'scrooloose/nerdtree'
@@ -98,6 +100,9 @@ Plug 'w0ng/vim-hybrid'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 
 Plug 'morhetz/gruvbox'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'digitaltoad/vim-jade', {'for': 'jade'}
+Plug 'elmcast/elm-vim', {'for': 'elm'}
 call plug#end()
 
 " CSApprox, for emulating gvim colors on teh terminal
@@ -113,14 +118,14 @@ endif
 nnoremap <silent> <C-p> :FZF<CR>
 
 let g:rehash256 = 1
-
 set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show Unicode glyphs
+let g:airline_powerline_fonts = 1
 let g:Powerline_symbols = 'fancy'
 
 "NeoMake
 let g:neomake_javascript_eslint_maker = {
-        \ 'args': ['-f', 'compact', '-c', '/home/diegonakamashi/.eslint.json'],
+        \ 'args': ['-f', 'compact', '-c', '/Users/diegonakamashi/.eslintrc'],
         \ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
         \ '%W%f: line %l\, col %c\, Warning - %m'
     \ }
@@ -138,34 +143,23 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
+"YouCompleteMe
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+
 let g:solarized_termcolors=256
 " set background=dark
 " colorscheme solarized
-
-" lightline
-let g:lightline = {
- \ 'active': {
- \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
- \ },
- \ 'component': {
- \   'readonly': '%{&readonly?"":""}',
- \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
- \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
- \ },
- \ 'component_visible_condition': {
- \   'readonly': '(&filetype!="help"&& &readonly)',
- \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
- \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
- \ },
-\ 'separator': { 'left': '⮀', 'right': '⮂' },
-\ 'subseparator': { 'left': '⮁', 'right': '⮃' }
- \ }
 
 
 " Open edit mode like NERDTree
 let g:netrw_liststyle=3
 nnoremap <F2> :NERDTreeToggle<CR>
 set background=dark
-colorscheme gruvbox
+colorscheme solarized
 
-
+if has("mac") || has("macunix")
+  set guifont=Monaco\ for\ Powerline:h24
+elseif has("win32") || has("win64")
+  set guifont=Monaco\ for\ Powerline:h14:cANSI
+  set renderoptions=type:directx,renmode:5
+endif
