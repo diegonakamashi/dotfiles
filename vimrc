@@ -50,6 +50,7 @@ else
   vmap <C-c> y: call system("xclip -i -selection clipboard", getreg("\""))<CR>
   map <C-v> :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
 endif
+
 call plug#begin('~/.vim/plugged')
 Plug 'rking/ag.vim'
 
@@ -83,8 +84,9 @@ Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
 Plug 'vim-scripts/CSApprox'
 Plug 'ervandew/supertab'
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
+Plug 'Shougo/deoplete.nvim'
 
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'Raimondi/delimitMate'
@@ -134,9 +136,9 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 autocmd! BufWritePost * Neomake
 
 " make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
+"let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+"let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+"let g:SuperTabDefaultCompletionType = '<C-n>'
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -144,12 +146,14 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 "YouCompleteMe
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
+"let g:ycm_collect_identifiers_from_comments_and_strings = 1
 
 let g:solarized_termcolors=256
 " set background=dark
 " colorscheme solarized
 
+" deoplete
+let g:deoplete#enable_at_startup = 1
 
 " Open edit mode like NERDTree
 let g:netrw_liststyle=3
