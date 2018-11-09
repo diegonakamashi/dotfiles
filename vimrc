@@ -1,6 +1,7 @@
-set t_Co=256
+" set t_Co=256
 set encoding=utf-8
 set nocompatible
+let g:loaded_python_provider = 1
 
 " Remove trailing whitespaces on save
 autocmd BufWritePre * :%s/\s\+$//e
@@ -22,16 +23,8 @@ set smarttab                        " Smarter tab levels
 set autoindent
 set backspace=2                     " make backspace work like most other app
 set number
-"set cursorline
+set cursorline
 set synmaxcol=300
-
-" Bubble Text
-" Bubble single lines
-nmap <C-Up> ddkP
-nmap <C-Down> ddp
-" Bubble multiple lines
-vmap <C-Up> xkP`[V`]
-vmap <C-Down> xp`[V`]
 
 " Vim shortcuts + Tmux
 if &term =~ '^screen'
@@ -54,23 +47,7 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'rking/ag.vim'
 
-" colorscheme solarized
-Plug 'altercation/vim-colors-solarized'
-
-" CoffeeScript
-Plug 'kchmck/vim-coffee-script'
-
-" Snips
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-
-" Vim Multiple Cusors
-Plug 'terryma/vim-multiple-cursors'
-
-" powerline
-Plug 'vim-airline/vim-airline'
-
-Plug 'tomasr/molokai'
+Plug 'rakr/vim-one'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -84,90 +61,68 @@ Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
 Plug 'vim-scripts/CSApprox'
 Plug 'ervandew/supertab'
 
-"Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'roxma/nvim-completion-manager'
+Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
+Plug 'roxma/ncm-rct-complete'
 
-Plug 'Shougo/deoplete.nvim'
-Plug 'carlitux/deoplete-ternjs'
-
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'Raimondi/delimitMate'
-Plug 'godlygeek/tabular'
-Plug 'benekastah/neomake'
-Plug 'mattn/emmet-vim', {'for': ['html', 'javascript']}
+
+Plug 'w0rp/ale'
+Plug 'mattn/emmet-vim', {'for': ['html', 'javascript', 'eruby']}
 Plug 'mxw/vim-jsx', {'for': 'javascript'}
 Plug 'tpope/vim-surround'
 Plug 'slim-template/vim-slim', {'for': 'slim'}
 Plug 'scrooloose/nerdtree'
 
-Plug 'w0ng/vim-hybrid'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug 'junegunn/fzf.vim'
 
-Plug 'morhetz/gruvbox'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'othree/yajs.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'digitaltoad/vim-jade', {'for': 'jade'}
 Plug 'elmcast/elm-vim', {'for': 'elm'}
+
+Plug 'dracula/vim'
+Plug 'itchyny/lightline.vim'
 call plug#end()
-
-" CSApprox, for emulating gvim colors on teh terminal
-if !has('gui_running') && exists(':CSApprox')
-  CSApprox
-endif
-
-if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
-   set t_Co=256
-endif
 
 " Uses <C-p> as fzf trigger
 nnoremap <silent> <C-p> :FZF<CR>
 
-let g:rehash256 = 1
+" Uses <C-a> as fzf on buffers
+nnoremap <silent> <C-l> :Buffers<CR>
+
 set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show Unicode glyphs
-let g:airline_powerline_fonts = 1
-let g:Powerline_symbols = 'fancy'
 
-"NeoMake
-let g:neomake_javascript_eslint_maker = {
-        \ 'args': ['-f', 'compact', '-c', '/Users/diegonakamashi/.eslintrc'],
-        \ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
-        \ '%W%f: line %l\, col %c\, Warning - %m'
-    \ }
 
-let g:neomake_javascript_enabled_makers = ['eslint']
-autocmd! BufWritePost * Neomake
+" ale
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_fixers = {}
+let g:ale_fixers['javascript'] = ['prettier']
+let g:ale_fix_on_save = 1
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\}
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
 
-" make YCM compatible with UltiSnips (using supertab)
-"let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-"let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-"let g:SuperTabDefaultCompletionType = '<C-n>'
+" Apply macros with Q
+nnoremap Q @q
+vnoremap Q :norm @q<cr>
 
-" UltiSnips
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+nmap ; :
 
-"YouCompleteMe
-"let g:ycm_collect_identifiers_from_comments_and_strings = 1
-
-let g:solarized_termcolors=256
-" set background=dark
-" colorscheme solarized
-
-" deoplete
-let g:deoplete#enable_at_startup = 1
-let g:tern_request_timeout = 1
-let g:tern_show_signature_in_pum = 0  " This do disable full signature type on autocomplete
-set completeopt-=preview "Disable preview split"
+let g:jsx_ext_required = 0
 
 " Open edit mode like NERDTree
 let g:netrw_liststyle=3
 nnoremap <F2> :NERDTreeToggle<CR>
-set background=dark
-colorscheme solarized
 
-if has("mac") || has("macunix")
-  set guifont=Monaco\ for\ Powerline:h24
-elseif has("win32") || has("win64")
-  set guifont=Monaco\ for\ Powerline:h14:cANSI
-  set renderoptions=type:directx,renmode:5
-endif
+
+" COLORSCHEME
+set termguicolors
+colorscheme one
+set background=dark
+
