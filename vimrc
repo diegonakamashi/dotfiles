@@ -25,6 +25,7 @@ set backspace=2                     " make backspace work like most other app
 set number
 set cursorline
 set synmaxcol=300
+set inccommand=split                " live substitution
 
 " Vim shortcuts + Tmux
 if &term =~ '^screen'
@@ -57,13 +58,21 @@ Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'othree/javascript-libraries-syntax.vim', {'for': 'javascript'}
 Plug 'jelera/vim-javascript-syntax', {'for': 'javascript'}
 
-Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
+Plug 'vim-ruby/vim-ruby', {'for': ['ruby', 'eruby'] }
 Plug 'vim-scripts/CSApprox'
+Plug 'ruby-formatter/rufo-vim'
 Plug 'ervandew/supertab'
 
 Plug 'roxma/nvim-completion-manager'
 Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
 Plug 'roxma/ncm-rct-complete'
+
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+
+"RUST
+Plug 'rust-lang/rust.vim'
+Plug 'racer-rust/vim-racer'
+Plug 'roxma/nvim-cm-racer'
 
 Plug 'Raimondi/delimitMate'
 
@@ -72,6 +81,7 @@ Plug 'mattn/emmet-vim', {'for': ['html', 'javascript', 'eruby']}
 Plug 'mxw/vim-jsx', {'for': 'javascript'}
 Plug 'tpope/vim-surround'
 Plug 'slim-template/vim-slim', {'for': 'slim'}
+Plug 'leafgarland/typescript-vim'
 Plug 'scrooloose/nerdtree'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
@@ -84,11 +94,18 @@ Plug 'digitaltoad/vim-jade', {'for': 'jade'}
 Plug 'elmcast/elm-vim', {'for': 'elm'}
 
 Plug 'dracula/vim'
-Plug 'itchyny/lightline.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'morhetz/gruvbox'
 call plug#end()
 
 " Uses <C-p> as fzf trigger
 nnoremap <silent> <C-p> :FZF<CR>
+" ignore same files that .gitignore
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+
+" Uses <C-a> as fzf on buffers
+nnoremap <silent> <C-l> :Buffers<CR>
 
 " Uses <C-a> as fzf on buffers
 nnoremap <silent> <C-l> :Buffers<CR>
@@ -103,10 +120,13 @@ let g:ale_fixers = {}
 let g:ale_fixers['javascript'] = ['prettier']
 let g:ale_fix_on_save = 1
 let g:ale_linters = {
-\   'javascript': ['eslint'],
+\   'javascript': ['eslint']
 \}
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
+\   'ruby': ['rubocop']
+\}
+
 
 " Apply macros with Q
 nnoremap Q @q
@@ -125,4 +145,9 @@ nnoremap <F2> :NERDTreeToggle<CR>
 set termguicolors
 colorscheme one
 set background=dark
+" Auto format Rust code
+let g:rustfmt_autosave = 1
+" Enable rufo (RUby FOrmat)
+let g:rufo_auto_formatting = 1
+
 
