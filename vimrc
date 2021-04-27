@@ -1,4 +1,5 @@
 " set t_Co=256
+
 set encoding=utf-8
 set nocompatible
 let g:loaded_python_provider = 1
@@ -23,7 +24,7 @@ set smarttab                        " Smarter tab levels
 set autoindent
 set backspace=2                     " make backspace work like most other app
 set number
-set cursorline
+" set cursorline
 set synmaxcol=300
 set inccommand=split                " live substitution
 
@@ -59,16 +60,12 @@ Plug 'othree/javascript-libraries-syntax.vim', {'for': 'javascript'}
 Plug 'jelera/vim-javascript-syntax', {'for': 'javascript'}
 
 Plug 'vim-ruby/vim-ruby', {'for': ['ruby', 'eruby'] }
+Plug 'dbakker/vim-projectroot'
 Plug 'vim-scripts/CSApprox'
-Plug 'ruby-formatter/rufo-vim'
 Plug 'ervandew/supertab'
 
-Plug 'roxma/nvim-completion-manager'
-Plug 'roxma/nvim-cm-tern', {'do': 'npm install'}
-Plug 'roxma/ncm-rct-complete'
-
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 "RUST
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
@@ -78,7 +75,7 @@ Plug 'Raimondi/delimitMate'
 
 Plug 'w0rp/ale'
 Plug 'mattn/emmet-vim', {'for': ['html', 'javascript', 'eruby']}
-Plug 'mxw/vim-jsx', {'for': 'javascript'}
+" Plug 'mxw/vim-jsx', {'for': 'javascript'}
 Plug 'tpope/vim-surround'
 Plug 'slim-template/vim-slim', {'for': 'slim'}
 Plug 'leafgarland/typescript-vim'
@@ -92,7 +89,7 @@ Plug 'othree/yajs.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'digitaltoad/vim-jade', {'for': 'jade'}
 Plug 'elmcast/elm-vim', {'for': 'elm'}
-
+Plug 'drewtempelmeyer/palenight.vim'
 Plug 'dracula/vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -116,16 +113,18 @@ set encoding=utf-8 " Necessary to show Unicode glyphs
 
 " ale
 let g:ale_lint_on_text_changed = 'never'
-let g:ale_fixers = {}
-let g:ale_fixers['javascript'] = ['prettier']
+let g:ale_fixers = {
+\   'ruby': ['rubocop'],
+\   'javascript': ['standard'],
+\   'javascript.jsx': ['standard'],
+\}
 let g:ale_fix_on_save = 1
 let g:ale_linters = {
-\   'javascript': ['eslint']
-\}
-let g:ale_sign_error = '✘'
-let g:ale_sign_warning = '⚠'
+\   'javascript': ['eslint'],
 \   'ruby': ['rubocop']
 \}
+let g:ale_sign_error = 'x'
+let g:ale_sign_warning = '!'
 
 
 " Apply macros with Q
@@ -143,11 +142,9 @@ nnoremap <F2> :NERDTreeToggle<CR>
 
 " COLORSCHEME
 set termguicolors
-colorscheme one
+colorscheme palenight
 set background=dark
 " Auto format Rust code
 let g:rustfmt_autosave = 1
-" Enable rufo (RUby FOrmat)
-let g:rufo_auto_formatting = 1
 
 
